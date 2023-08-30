@@ -9,7 +9,7 @@ def initialize_grid(rows, cols, density=0.2):
 def print_grid(grid):
     os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal
     for row in grid:
-        print(' '.join(['■' if cell else '□' for cell in row]))
+        print(' '.join(['⬛' if cell else '⬜' for cell in row]))
     print()
 
 def count_neighbors(grid, x, y):
@@ -43,8 +43,8 @@ def main(rows, cols, steps, density):
         time.sleep(0.5)
 
 if __name__ == "__main__":
-    rows = 30
-    cols = 60
+    rows = 20
+    cols = 30
     steps = 50
     density = 0.2
     main(rows, cols, steps, density)
