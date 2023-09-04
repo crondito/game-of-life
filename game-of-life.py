@@ -2,7 +2,7 @@ import random
 import time
 import os
 
-custom_grid_1 = [
+EXAMPLE_GRID_1 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
     [0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
@@ -15,7 +15,7 @@ custom_grid_1 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
 
-custom_grid_2 = [
+EXAMPLE_GRID_2 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -28,14 +28,14 @@ custom_grid_2 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
 
-custom_grid_3 = [
+EXAMPLE_GRID_3 = [
     [0, 0, 0, 0],
     [0, 1, 1, 0],
     [0, 1, 1, 0],
     [0, 0, 0, 0]
 ]
 
-custom_grid_4 = [
+EXAMPLE_GRID_4 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -47,6 +47,18 @@ custom_grid_4 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
+
+EXAMPLE_GRID_5 = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
 
 LIVE_CELL = '\u2b1b'
@@ -68,9 +80,9 @@ def count_neighbors(grid, x, y):
     rows, cols = len(grid), len(grid[0])
     count = 0
     for dx, dy in NEIGHBOR_DIRECTIONS:
-        nx, ny = x + dx, y + dy
-        if 0 <= nx < rows and 0 <= ny < cols:
-            count += grid[nx][ny]
+        neighbor_x, neighbor_y = x + dx, y + dy
+        if 0 <= neighbor_x < rows and 0 <= neighbor_y < cols:
+            count += grid[neighbor_x][neighbor_y]
     return count
 
 def update_grid(grid):
@@ -88,47 +100,55 @@ def update_grid(grid):
 def get_user_input():
     print("Bienvenido al JUEGO DE LA VIDA")
     print("Opciones:")
-    print("1. Cuadrícula al azar [filas=20, columnas=40, pasos=200, densidad=0.2]")
-    print("2. Ejemplo Oscilador")
-    print("3. Ejemplo Nave espacial")
-    print("4. Ejemplo Estático")
-    print("5. Ejemplo Matusalen (Die Hard)")
+    print("-------------")
+    print("1. Cuadrícula al azar")
+    print("---PATRONES---")
+    print("2. Oscilador")
+    print("3. Nave espacial")
+    print("4. Estático")
+    print("5. Matusalen (Die Hard)")
+    print("6. Cañón de Planeadores")
     
-    choice = input("Enter your choice: ")
+    print("-------------")
+    choice = input("¿Cuál elige?: ")
     
     if choice == "1":
         return 20, 40, 200
     elif choice == "2":
-        return len(custom_grid_1), len(custom_grid_1[0]), 100
+        return len(EXAMPLE_GRID_1), len(EXAMPLE_GRID_1[0]), 100
     elif choice == "3":
-        return len(custom_grid_2), len(custom_grid_2[0]), 50
+        return len(EXAMPLE_GRID_2), len(EXAMPLE_GRID_2[0]), 50
     elif choice == "4":
-        return len(custom_grid_3), len(custom_grid_3[0]), 20
+        return len(EXAMPLE_GRID_3), len(EXAMPLE_GRID_3[0]), 20
     elif choice == "5":
-        return len(custom_grid_4), len(custom_grid_4[0]), 60
+        return len(EXAMPLE_GRID_4), len(EXAMPLE_GRID_4[0]), 60
+    elif choice == "6":
+        return len(EXAMPLE_GRID_5), len(EXAMPLE_GRID_5[0]), 100
     else:
-        print("Invalid choice. Using option 1.")
+        print("Opción no válida. Usando Opción 1.")
         time.sleep(3)
         return 20, 40, 200
 
 def main(grid=None):
     if grid is None:
         rows, cols, steps = get_user_input()
-        if rows == len(custom_grid_1) and cols == len(custom_grid_1[0]):
-            grid = custom_grid_1
-        elif rows == len(custom_grid_2) and cols == len(custom_grid_2[0]):
-            grid = custom_grid_2
-        elif rows == len(custom_grid_3) and cols == len(custom_grid_3[0]):
-            grid = custom_grid_3
-        elif rows == len(custom_grid_4) and cols == len(custom_grid_4[0]):
-            grid = custom_grid_4
+        if rows == len(EXAMPLE_GRID_1) and cols == len(EXAMPLE_GRID_1[0]):
+            grid = EXAMPLE_GRID_1
+        elif rows == len(EXAMPLE_GRID_2) and cols == len(EXAMPLE_GRID_2[0]):
+            grid = EXAMPLE_GRID_2
+        elif rows == len(EXAMPLE_GRID_3) and cols == len(EXAMPLE_GRID_3[0]):
+            grid = EXAMPLE_GRID_3
+        elif rows == len(EXAMPLE_GRID_4) and cols == len(EXAMPLE_GRID_4[0]):
+            grid = EXAMPLE_GRID_4
+        elif rows == len(EXAMPLE_GRID_5) and cols == len(EXAMPLE_GRID_5[0]):
+            grid = EXAMPLE_GRID_5
         else:
             grid = initialize_grid(rows, cols)
     
     for step in range(1, steps + 1):
         print_grid(grid, step)
         grid = update_grid(grid)
-        time.sleep(0.5)
+        time.sleep(0.4)
 
 if __name__ == "__main__":
     main()
