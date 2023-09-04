@@ -70,7 +70,7 @@ DEAD_CELL = '\u2b1c'
 
 NEIGHBOR_DIRECTIONS = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
 
-def initialize_grid(rows=20, cols=40, density=0.2):
+def initialize_random_grid(rows=20, cols=40, density=0.2):
     grid = [[random.choices([0, 1], [1 - density, density])[0] for _ in range(cols)] for _ in range(rows)]
     return grid
 
@@ -135,7 +135,7 @@ def get_user_input():
 def main():
     grid, rows, cols, steps = get_user_input()
     if grid == None:
-        grid = initialize_grid(rows, cols)
+        grid = initialize_random_grid(rows, cols)
     
     for step in range(1, steps + 1):
         print_grid(grid, step)
