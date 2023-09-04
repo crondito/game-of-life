@@ -1,15 +1,16 @@
 import random
+import sys
 import time
 import os
 
-def initialize_grid(rows, cols, density=0.2):
-    grid = [[random.choice([0, 1]) for _ in range(cols)] for _ in range(rows)]
+def initialize_grid(rows=30, cols=20, density=0.2):
+    grid = [[random.choices([0, 1], [1 - density, density])[0] for _ in range(cols)] for _ in range(rows)]
     return grid
 
 def print_grid(grid):
-    os.system('clear' if os.name == 'posix' else 'cls')  # Clear the terminal
+    os.system('cls' if os.name == 'nt' else 'clear')
     for row in grid:
-        print(' '.join(['⬛' if cell else '⬜' for cell in row]))
+        print(' '.join(['\u2b1b' if cell else '\u2b1c' for cell in row]).encode('utf-8').decode(sys.stdout.encoding))
     print()
 
 def count_neighbors(grid, x, y):
@@ -43,8 +44,8 @@ def main(rows, cols, steps, density):
         time.sleep(0.5)
 
 if __name__ == "__main__":
-    rows = 20
-    cols = 30
-    steps = 50
+    rows = 40
+    cols = 60
+    steps = 500
     density = 0.2
     main(rows, cols, steps, density)
