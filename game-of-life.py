@@ -43,8 +43,8 @@ def main(rows, cols, steps, density):
         time.sleep(0.5)
 
 if __name__ == "__main__":
-    rows = 40
-    cols = 80
-    steps = 300
+    rows = 20
+    cols = 40
+    steps = 200
     density = 0.2
     main(rows, cols, steps, density)
