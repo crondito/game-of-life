@@ -22,7 +22,7 @@ Tener Python 3 instalado.
 
 1. `cd <ruta/>` - reemplazar "ruta" con la ruta local donde se encuentra el programa.
 
-2. `python game-of-life.py`
+2. `python3 game-of-life.py`
 
 3. Seguir las instrucciones en pantalla.
 
