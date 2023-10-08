@@ -4,7 +4,7 @@ Autor: Carlos Rodas
 
 ## Descripción
 
-Esta es una implementación del autómata celular diseñado por John Horton Conway en Python.
+Esta es una implementación del autómata celular diseñado por John Horton Conway en Python3.
 
 https://es.wikipedia.org/wiki/Juego_de_la_vida
 
